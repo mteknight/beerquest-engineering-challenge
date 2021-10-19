@@ -1,3 +1,5 @@
+***Please refer to Considerations below.***
+
 # beerquest-engineering-challenge
 
 ## The Challenge
@@ -16,6 +18,7 @@ applications.
 will provide base containers on request, or you may use your own.
 
 ## Considerations/Assumptions
+- The approach chosen was **Backend Focused**.
 - As can be observed via the commit history, the design is DDD and implementation was done in TDD.
 - I have focused on querying a specific Pub to showcase how to do it and how everything evolves into the Domain and Data layers.
 - The `HttpClientService` is tested indirectly as it is *difficult* to mock the HttpClient class. It can be done but requires a lot of workarounds, which could be worth it on a real scenario where it will be used a lot. For the sake of this test, it was skipped and tested from outside.
