@@ -102,13 +102,20 @@ namespace BeerQuest.Tests
             this.httpClientService = Guard.Argument(httpClientService, nameof(httpClientService)).NotNull().Value;
         }
 
-        public Task<Pub> Get(
+        public async Task<Pub?> Get(
             string name,
             CancellationToken cancellationToken = default)
         {
             var uri = $"{Api}?name={name}";
 
-            return this.httpClientService.Get<Pub>(uri, cancellationToken);
+            try
+            {
+                return await this.httpClientService.Get<Pub>(uri, cancellationToken);
+            }
+            catch (HttpRequestException e)
+            {
+                return default;
+            }
         }
     }
 
