@@ -14,25 +14,10 @@ using Moq;
 
 using Xunit;
 
-namespace BeerQuest.Domain.Tests
+namespace BeerQuest.Domain.Tests.Services
 {
     public class PubServiceTests
     {
-        [Theory]
-        [AutoData]
-        public async Task GivenPubExists_WhenGettingPubByName_ThenReturnPub(string name)
-        {
-            // Arrange
-            var mockedHttpClientService = new Mock<IHttpClientService>();
-            var service = new PubService(mockedHttpClientService.Object);
-
-            // Act
-            var pub = await service.Get(name);
-
-            // Assert
-            pub.Should().NotBeNull($"A pub named '{name}' exists and is part of the Beer Quest.");
-        }
-
         [Theory]
         [AutoData]
         public async Task GivenRequestUnsuccessful_WhenGettingPubByName_ThenReturnNull(string name)
