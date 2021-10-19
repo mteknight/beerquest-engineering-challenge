@@ -21,6 +21,11 @@ namespace BeerQuest.API.Controllers
 
         public async Task<IActionResult> Get([FromQuery] string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return this.BadRequest($"Query parameter '{nameof(name)}' is invalid.");
+            }
+
             var pub = await this.service.Get(name);
 
             return this.Ok(pub);

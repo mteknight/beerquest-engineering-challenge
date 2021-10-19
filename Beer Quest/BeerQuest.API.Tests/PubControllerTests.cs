@@ -53,7 +53,7 @@ namespace BeerQuest.API.Tests
             var result = await controller.Get(name);
 
             // Assert
-            result.Should().BeOfType<BadRequestResult>();
+            result.Should().BeOfType<BadRequestObjectResult>();
         }
     }
 }
