@@ -15,7 +15,7 @@ using Moq;
 
 using Xunit;
 
-namespace BeerQuest.API.Tests
+namespace BeerQuest.API.Tests.UnitTests
 {
     public class PubControllerTests
     {

@@ -10,6 +10,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerQuest.Data", "BeerQuest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerQuest.API.Tests", "BeerQuest.API.Tests\BeerQuest.API.Tests.csproj", "{AEDAA620-93C8-4033-8901-31E9C7128192}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerQuest.CrossCutting", "BeerQuest.CrossCutting\BeerQuest.CrossCutting.csproj", "{04AF905A-8307-4660-9855-AAC03606B958}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{166A58B1-3455-47E1-A737-67681E47858C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +40,13 @@ Global
 		{AEDAA620-93C8-4033-8901-31E9C7128192}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEDAA620-93C8-4033-8901-31E9C7128192}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEDAA620-93C8-4033-8901-31E9C7128192}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04AF905A-8307-4660-9855-AAC03606B958}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04AF905A-8307-4660-9855-AAC03606B958}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04AF905A-8307-4660-9855-AAC03606B958}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04AF905A-8307-4660-9855-AAC03606B958}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AEDAA620-93C8-4033-8901-31E9C7128192} = {166A58B1-3455-47E1-A737-67681E47858C}
+		{0AA82010-1322-4DD2-9402-A8B6E78120C4} = {166A58B1-3455-47E1-A737-67681E47858C}
 	EndGlobalSection
 EndGlobal
