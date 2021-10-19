@@ -127,6 +127,8 @@ namespace BeerQuest.Tests
             string name,
             CancellationToken cancellationToken = default)
         {
+            Guard.Argument(name, nameof(name)).NotNull();
+
             var uri = $"{Api}?name={name}";
 
             try
