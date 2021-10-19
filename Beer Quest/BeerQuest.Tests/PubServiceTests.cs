@@ -21,7 +21,7 @@ namespace BeerQuest.Tests
     {
         [Theory]
         [AutoData]
-        public async Task GivenPubExists_WhenGettingPubByName_ExpectPubRetrieved(string name)
+        public async Task GivenPubExists_WhenGettingPubByName_ThenReturnPub(string name)
         {
             // Arrange
             var mockedHttpClientService = new Mock<IHttpClientService>();
@@ -36,7 +36,7 @@ namespace BeerQuest.Tests
 
         [Theory]
         [AutoData]
-        public async Task GivenRequestUnsuccessful_WhenGettingPubByName_ExpectNullReturn(string name)
+        public async Task GivenRequestUnsuccessful_WhenGettingPubByName_ThenReturnNull(string name)
         {
             // Arrange
             var pub = default(Pub);
@@ -58,6 +58,27 @@ namespace BeerQuest.Tests
             // Assert
             await sutCall.Should().NotThrowAsync<HttpRequestException>("No errors are expected to happen.");
             pub.Should().BeNull("A null object must be returned when an error occurs.");
+        }
+
+        [Fact]
+        public async Task GivenNameIsNull_WhenGettingPubByName_ThenThrowArgumentNullException()
+        {
+            // Arrange
+            var name = default(string);
+            var mockedHttpClientService = new Mock<IHttpClientService>();
+            var pubService = new PubService(mockedHttpClientService.Object);
+
+            // Act
+            async Task SutCall()
+            {
+                await pubService.Get(name);
+            }
+
+            Func<Task> sutCall = SutCall;
+
+            // Assert
+            await sutCall.Should()
+                .ThrowAsync<ArgumentNullException>("Name cannot be null when querying by pubs by name.");
         }
     }
 
