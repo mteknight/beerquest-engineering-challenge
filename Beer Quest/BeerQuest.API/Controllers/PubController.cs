@@ -19,6 +19,7 @@ namespace BeerQuest.API.Controllers
             this.service = Guard.Argument(service, nameof(service)).NotNull().Value;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Get([FromQuery] string name)
         {
             if (string.IsNullOrWhiteSpace(name))
