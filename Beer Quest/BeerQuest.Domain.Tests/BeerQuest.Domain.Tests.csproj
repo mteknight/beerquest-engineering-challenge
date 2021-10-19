@@ -29,6 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\BeerQuest.CrossCutting\BeerQuest.CrossCutting.csproj" />
         <ProjectReference Include="..\BeerQuest.Domain\BeerQuest.Domain.csproj" />
     </ItemGroup>
 

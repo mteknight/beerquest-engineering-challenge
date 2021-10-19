@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 
+using BeerQuest.Data.Models;
+
 using Dawn;
 
 using Newtonsoft.Json;
@@ -17,7 +19,7 @@ namespace BeerQuest.Data.Services
             this.httpClientFactory = Guard.Argument(httpClientFactory, nameof(httpClientFactory)).NotNull().Value;
         }
 
-        public async Task<T?> Get<T>(
+        public async Task<PubResponseData?> Get<T>(
             string uri,
             CancellationToken cancellationToken = default)
         {
@@ -28,7 +30,7 @@ namespace BeerQuest.Data.Services
 
             var json = await response.Content.ReadAsStringAsync(cancellationToken);
 
-            return JsonConvert.DeserializeObject<T>(json);
+            return JsonConvert.DeserializeObject<PubResponseData>(json);
         }
     }
 }

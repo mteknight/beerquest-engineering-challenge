@@ -26,6 +26,7 @@
     <ItemGroup>
       <ProjectReference Include="..\BeerQuest.API\BeerQuest.API.csproj" />
       <ProjectReference Include="..\BeerQuest.CrossCutting\BeerQuest.CrossCutting.csproj" />
+      <ProjectReference Include="..\BeerQuest.Domain.Tests\BeerQuest.Domain.Tests.csproj" />
       <ProjectReference Include="..\BeerQuest.Domain\BeerQuest.Domain.csproj" />
     </ItemGroup>
 

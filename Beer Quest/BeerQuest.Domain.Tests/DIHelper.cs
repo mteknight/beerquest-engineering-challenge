@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Moq;
 
-namespace BeerQuest.API.Tests
+namespace BeerQuest.Domain.Tests
 {
     public static class DIHelper
     {

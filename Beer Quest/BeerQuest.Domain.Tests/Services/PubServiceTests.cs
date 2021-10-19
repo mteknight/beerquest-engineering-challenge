@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoFixture.Xunit2;
 
 using BeerQuest.Data.Services;
+using BeerQuest.Domain.Mapper;
 using BeerQuest.Domain.Services;
 
 using FluentAssertions;
@@ -18,6 +19,13 @@ namespace BeerQuest.Domain.Tests.Services
 {
     public class PubServiceTests
     {
+        private readonly IPubMapper pubMapper;
+
+        public PubServiceTests()
+        {
+            this.pubMapper = DIHelper.GetServices().GetConfiguredService<IPubMapper>();
+        }
+
         [Theory]
         [AutoData]
         public async Task GivenRequestUnsuccessful_WhenGettingPubByName_ThenReturnNull(string name)
@@ -29,7 +37,7 @@ namespace BeerQuest.Domain.Tests.Services
                 .Setup(service => service.Get<Pub>(It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new HttpRequestException());
 
-            var pubService = new PubService(mockedHttpClientService.Object);
+            var pubService = new PubService(mockedHttpClientService.Object, this.pubMapper);
 
             // Act
             async Task SutCall()
@@ -50,7 +58,7 @@ namespace BeerQuest.Domain.Tests.Services
             // Arrange
             var name = default(string);
             var mockedHttpClientService = new Mock<IHttpClientService>();
-            var pubService = new PubService(mockedHttpClientService.Object);
+            var pubService = new PubService(mockedHttpClientService.Object, this.pubMapper);
 
             // Act
             async Task SutCall()
@@ -72,7 +80,7 @@ namespace BeerQuest.Domain.Tests.Services
         {
             // Arrange
             var mockedHttpClientService = new Mock<IHttpClientService>();
-            var pubService = new PubService(mockedHttpClientService.Object);
+            var pubService = new PubService(mockedHttpClientService.Object, this.pubMapper);
 
             // Act
             async Task SutCall()
