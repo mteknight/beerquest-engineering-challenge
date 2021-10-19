@@ -78,7 +78,29 @@ namespace BeerQuest.Tests
 
             // Assert
             await sutCall.Should()
-                .ThrowAsync<ArgumentNullException>("Name cannot be null when querying by pubs by name.");
+                .ThrowAsync<ArgumentNullException>("Name cannot be null when querying pubs by name.");
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task GivenNameIsEmptyOrWhitespace_WhenGettingPubByName_ThenThrowArgumentException(string name)
+        {
+            // Arrange
+            var mockedHttpClientService = new Mock<IHttpClientService>();
+            var pubService = new PubService(mockedHttpClientService.Object);
+
+            // Act
+            async Task SutCall()
+            {
+                await pubService.Get(name);
+            }
+
+            Func<Task> sutCall = SutCall;
+
+            // Assert
+            await sutCall.Should()
+                .ThrowAsync<ArgumentException>("Name cannot be empty or whitespace when querying pubs by name.");
         }
     }
 
