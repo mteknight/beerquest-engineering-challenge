@@ -9,6 +9,8 @@ using Dawn;
 
 using FluentAssertions;
 
+using Moq;
+
 using Newtonsoft.Json;
 
 using Xunit;
@@ -22,7 +24,8 @@ namespace BeerQuest.Tests
         public async Task GivenPubExists_WhenGettingPubByName_ExpectPubRetrieved(string name)
         {
             // Arrange
-            var service = new PubService();
+            var mockedHttpClientService = new Mock<IHttpClientService>();
+            var service = new PubService(mockedHttpClientService.Object);
 
             // Act
             var pub = await service.Get(name);
@@ -33,47 +36,51 @@ namespace BeerQuest.Tests
 
         [Theory]
         [AutoData]
-        public void GivenRequestUnsuccessful_WhenMakingHttpGetRequest_ExpectHttpRequestException(string uri)
+        public async Task GivenRequestUnsuccessful_WhenGettingPubByName_ExpectNullReturn(string name)
         {
             // Arrange
-            var apiClient = new HttpClientService();
+            var pub = default(Pub);
+            var mockedHttpClientService = new Mock<IHttpClientService>();
+            mockedHttpClientService
+                .Setup(service => service.Get<Pub>(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new HttpRequestException());
+
+            var pubService = new PubService(mockedHttpClientService.Object);
 
             // Act
             async Task SutCall()
             {
-                await apiClient.Get<Pub>(uri);
+                pub = await pubService.Get(name);
             }
 
-            Action sutCall = async () => await SutCall();
+            Func<Task> sutCall = SutCall;
 
             // Assert
-            sutCall.Should().ThrowExactly<HttpRequestException>("Http call must ensure a successful result.");
+            await sutCall.Should().NotThrowAsync<HttpRequestException>("No errors are expected to happen.");
+            pub.Should().BeNull("A null object must be returned when an error occurs.");
         }
     }
 
-    public class HttpClientService
+    public interface IHttpClientService
     {
-        public Task<T> Get<T>(string uri)
-        {
-            throw new NotImplementedException();
-        }
+        Task<T> Get<T>(
+            string uri,
+            CancellationToken cancellationToken = default);
     }
 
-    public class PubService
+    public class HttpClientService : IHttpClientService
     {
-        private const string api = "https://datamillnorth.org/api/table/wk7xz_hf8bv";
         private readonly IHttpClientFactory httpClientFactory;
 
-        public PubService(IHttpClientFactory httpClientFactory)
+        public HttpClientService(IHttpClientFactory httpClientFactory)
         {
             this.httpClientFactory = Guard.Argument(httpClientFactory, nameof(httpClientFactory)).NotNull().Value;
         }
 
-        public async Task<Pub> Get(
-            string name,
+        public async Task<T> Get<T>(
+            string uri,
             CancellationToken cancellationToken = default)
         {
-            var uri = $"{api}?name={name}";
             using var client = this.httpClientFactory.CreateClient();
             var response = await client.GetAsync(uri, cancellationToken);
 
@@ -81,7 +88,27 @@ namespace BeerQuest.Tests
 
             var json = await response.Content.ReadAsStringAsync(cancellationToken);
 
-            return JsonConvert.DeserializeObject<Pub>(json);
+            return JsonConvert.DeserializeObject<T>(json);
+        }
+    }
+
+    public class PubService
+    {
+        private const string Api = "https://datamillnorth.org/api/table/wk7xz_hf8bv";
+        private readonly IHttpClientService httpClientService;
+
+        public PubService(IHttpClientService httpClientService)
+        {
+            this.httpClientService = Guard.Argument(httpClientService, nameof(httpClientService)).NotNull().Value;
+        }
+
+        public Task<Pub> Get(
+            string name,
+            CancellationToken cancellationToken = default)
+        {
+            var uri = $"{Api}?name={name}";
+
+            return this.httpClientService.Get<Pub>(uri, cancellationToken);
         }
     }
 
