@@ -2,7 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerQuest.API", "BeerQuest.API\BeerQuest.API.csproj", "{5CD160BB-162B-4E48-82D2-71B03525932B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerQuest.Tests", "BeerQuest.Tests\BeerQuest.Tests.csproj", "{0AA82010-1322-4DD2-9402-A8B6E78120C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerQuest.Domain.Tests", "BeerQuest.Domain.Tests\BeerQuest.Domain.Tests.csproj", "{0AA82010-1322-4DD2-9402-A8B6E78120C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerQuest.Domain", "BeerQuest.Domain\BeerQuest.Domain.csproj", "{538D114C-84CA-4374-B008-316AFAC4A8B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BeerQuest.Data", "BeerQuest.Data\BeerQuest.Data.csproj", "{C2517E8E-04C4-49B4-BE71-3CF449F68B7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +22,13 @@ Global
 		{0AA82010-1322-4DD2-9402-A8B6E78120C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AA82010-1322-4DD2-9402-A8B6E78120C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AA82010-1322-4DD2-9402-A8B6E78120C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{538D114C-84CA-4374-B008-316AFAC4A8B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{538D114C-84CA-4374-B008-316AFAC4A8B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{538D114C-84CA-4374-B008-316AFAC4A8B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{538D114C-84CA-4374-B008-316AFAC4A8B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2517E8E-04C4-49B4-BE71-3CF449F68B7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2517E8E-04C4-49B4-BE71-3CF449F68B7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2517E8E-04C4-49B4-BE71-3CF449F68B7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2517E8E-04C4-49B4-BE71-3CF449F68B7C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -5,17 +5,16 @@ using System.Threading.Tasks;
 
 using AutoFixture.Xunit2;
 
-using Dawn;
+using BeerQuest.Data.Services;
+using BeerQuest.Domain.Services;
 
 using FluentAssertions;
 
 using Moq;
 
-using Newtonsoft.Json;
-
 using Xunit;
 
-namespace BeerQuest.Tests
+namespace BeerQuest.Domain.Tests
 {
     public class PubServiceTests
     {
@@ -102,70 +101,5 @@ namespace BeerQuest.Tests
             await sutCall.Should()
                 .ThrowAsync<ArgumentException>("Name cannot be empty or whitespace when querying pubs by name.");
         }
-    }
-
-    public interface IHttpClientService
-    {
-        Task<T> Get<T>(
-            string uri,
-            CancellationToken cancellationToken = default);
-    }
-
-    public class HttpClientService : IHttpClientService
-    {
-        private readonly IHttpClientFactory httpClientFactory;
-
-        public HttpClientService(IHttpClientFactory httpClientFactory)
-        {
-            this.httpClientFactory = Guard.Argument(httpClientFactory, nameof(httpClientFactory)).NotNull().Value;
-        }
-
-        public async Task<T> Get<T>(
-            string uri,
-            CancellationToken cancellationToken = default)
-        {
-            using var client = this.httpClientFactory.CreateClient();
-            var response = await client.GetAsync(uri, cancellationToken);
-
-            response.EnsureSuccessStatusCode();
-
-            var json = await response.Content.ReadAsStringAsync(cancellationToken);
-
-            return JsonConvert.DeserializeObject<T>(json);
-        }
-    }
-
-    public class PubService
-    {
-        private const string Api = "https://datamillnorth.org/api/table/wk7xz_hf8bv";
-        private readonly IHttpClientService httpClientService;
-
-        public PubService(IHttpClientService httpClientService)
-        {
-            this.httpClientService = Guard.Argument(httpClientService, nameof(httpClientService)).NotNull().Value;
-        }
-
-        public async Task<Pub?> Get(
-            string name,
-            CancellationToken cancellationToken = default)
-        {
-            Guard.Argument(name, nameof(name)).NotNull();
-
-            var uri = $"{Api}?name={name}";
-
-            try
-            {
-                return await this.httpClientService.Get<Pub>(uri, cancellationToken);
-            }
-            catch (HttpRequestException e)
-            {
-                return default;
-            }
-        }
-    }
-
-    public class Pub
-    {
-        public string Name { get; set; }
     }
 }
