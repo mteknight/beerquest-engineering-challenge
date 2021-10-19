@@ -39,6 +39,21 @@ namespace BeerQuest.API.Tests
             result.As<OkObjectResult>().Value.As<Pub>().Name.Should().NotBeNull("The pub instance should be returned in the response.");
         }
 
+        [Theory]
+        [InlineData(default(string))]
+        [InlineData("")]
+        [InlineData(" ")]
+        public async Task GivenInvalidName_WhenQueryingPubsByName_ThenExpectBadRequest(string name)
+        {
+            // Arrange
+            var mockedPubService = new Mock<IPubService>();
+            var controller = new PubController(mockedPubService.Object);
 
+            // Act
+            var result = await controller.Get(name);
+
+            // Assert
+            result.Should().BeOfType<BadRequestResult>();
+        }
     }
 }
